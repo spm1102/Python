@@ -670,3 +670,288 @@ print(len(my_list))             # 3
   ```Python
   [4, 36, 25, 49, 81, 144, 16, 225]
   ```
+## OOP
+- Syntax\:
+  ```Python
+  class SinhVien:
+      "Đây là docstring của lớp SinhVien"
+      pass
+  a = SinhVien()
+  b = SinhVien()
+  ```
+- Build a method
+  ```Python
+  class Student:
+    "Information about Student"
+    def Student_infor(self):
+      print("Sinh Vien")
+    
+  a = Student()
+  a.Student_infor()                     #Sinh Vien
+  ```
+### Constructor
+- Default constructor\:
+  ```Python
+  class SinhVien:
+      "Đây là docstring của lớp SinhVien"
+      pass
+  a = SinhVien()
+  b = SinhVien()
+  ```
+- Constructor without parameters\:(`self` paramenter is **mandatory** when defines init method)
+  ```Python
+  class CongTy:
+
+      def __init__(self):
+          self.name = "TEK4.VN"
+          self.address = "Manor Central Park"
+
+      def show(self):
+          print('Name:', self.name, 'Address:', self.address)
+
+  cty = CongTy()
+  cty.show()
+  ```
+  Result\:
+  ```Python
+  Name: TEK4.VN Address: Manor Central Park
+  ```
+- Constructor with paramenters\:
+  ```Python
+  def __init__(self, [tham số 1, tham số 2,...]):
+    # Thân của hàm tạo
+  ```
+  - For example\:
+  ```Python
+  class SinhVien:
+      def __init__(self, ID, name):
+          print('Trong hàm tạo')
+          self.ID=ID
+          self.name = name
+          print('Khởi tạo giá trị cho các thuộc tính')
+
+      def show(self):
+          print('Mã sinh viên: {0}, Tên: {1}'.format(self.ID, self.name))
+
+  s1 = SinhVien(20,'Phúc Hiếu')
+  s1.show()
+  ```
+  Result\:
+  ```Python
+  Trong hàm tạo
+  Khởi tạo giá trị cho các thuộc tính
+  Mã sinh viên: 20, Tên: Phúc Hiếu
+  ```
+### Attribute
+- Attribute of class is defined inside the class but outside the constructor and it is the same in every object of class
+- Attribute of object is defined inside the constructor and is different with each object of class
+  ```Python
+  class Test:
+      x = 10
+      def __init__(self):
+          self.x = 20
+
+  test = Test()
+  print(test.x)
+  print(Test.x)
+  ```
+  Result\:
+  ```Python
+  20
+  10
+  ```
+- Adding `class_list` to keep track on the number of objects created
+  ```Python
+  class Circle:
+      circle_list = []
+      pi = 3.14159
+      def __init__(self, radius):
+          self.radius = radius
+          self.circle_list.append(self)
+
+      def area(self):
+          return self.pi * self.radius**2
+
+      def circumference(self):
+          return 2 * self.pi * self.radius
+
+  c1 = Circle(10)
+  c2 = Circle(20)
+  print(len(Circle.circle_list))
+  ```
+  Result\:
+  ```Python
+  2
+  ```
+### Inheritance
+![alt text](image-23.png)
+  ```Python
+  class SinhVien:
+      def __init__(self, ID):
+          self.ID = ID
+      def in_thong_tin(self):
+          print("ID của sinh viên là: ",self.ID)
+
+  class SinhVienY(SinhVien):
+      def __init__(self,ID,name):
+          SinhVien.__init__(self,ID)
+          self.name=name
+      def in_thong_tin_2(self):
+          print('Đây là sinh viên trường Y')
+
+  svy=SinhVienY(200,"Tùng")
+  svy.in_thong_tin()
+  svy.in_thong_tin_2()
+  ```
+  Result\:
+  ```Python
+  ID của sinh viên là:  200
+  Đây là sinh viên trường Y
+  ```
+- When u do not know which is the parent class of one particular class, using `super()` to refer to parent class
+  ```Python
+  class Person:
+      def __init__(self, first_name,last_name,age,email):
+          self.first_name = first_name
+          self.last_name = last_name
+          self.age = age
+          self.email = email
+
+      def print_info(self):
+          print(self.first_name +" " +self.last_name +" is " + str(self.age) +" years old.")
+
+  class Lecturer(Person):
+      def __init__(self,f_name,l_name,age,email,bank_account):
+          super().__init__(f_name,l_name,age,email)
+          self.bank_account = bank_account
+        
+  class Student(Person):
+      def __init__(self,f_name,l_name,age,email,student_id, grade=-1):
+          super().__init__(f_name,l_name,age,email)
+          self.student_id = student_id
+          self.grade=grade
+
+  std=Student("Nam", "Nguyễn", "21", "namnguyen@tek4.vn", "1234")
+  std.print_info()
+  std.print_Student()
+  ```
+  Result\:
+  ```Python
+  Nam Nguyễn is 21 years old.
+  Nam Nguyễn is 21 years old Email: namnguyen@tek4.vnID: 1234Grade:-1
+  ```
+### Polymorphism
+- When a method in children class has the same name, the same parameter and notation with one in parent class, the method of parent class will be overwritten
+  ```Python
+  class Bird:
+      def intro(self):
+        print("This is bird")
+    
+      def flight(self):
+        print("Flying method")
+
+  class Eagle(Bird):
+      def flight(self):
+        print("Eagle Flying")
+    
+  class Hawks(Bird):
+      def flight(self):
+        print("Hawks Flying")
+    
+  obj_bird = Bird()
+  obj_eag = Eagle()
+  obj_haw = Hawks()
+
+  obj_bird.intro()
+  obj_bird.flight()
+
+  obj_eag.intro()
+  obj_eag.flight()
+
+  obj_haw.intro()
+  obj_haw.flight()
+  ```
+  Result\:
+  ```Python
+  This is bird
+  Flying method
+  This is bird
+  Eagle Flying
+  This is bird
+  Hawks Flying
+  ```
+### Overwritten
+![alt text](image-24.png)
+  ```Python
+  class vi_du:
+      def __init__(self, a, b):
+          self.a = a
+          self.b = b
+
+      def __add__(self, other):
+          a = self.a + other.a
+          b = self.b + other.b
+          return a,b
+
+  t1 = vi_du(100, 102)
+  t2 = vi_du(104, 108)
+  print(t1 + t2)
+  ```
+  Result\:
+  ```Python
+  (204, 210)
+  ```
+![alt text](image-25.png)
+  ```Python
+  class vi_du:
+      def __init__(self, a, b):
+          self.a = a
+          self.b = b
+
+      def __str__(self):
+          return "({0},{1})".format(self.a, self.b)
+
+      def __eq__(self, other):
+          c = abs(self.a) + abs(self.b)
+          d = abs(other.a) + abs(other.b)
+          return c == d
+
+  t1 = vi_du(100,3)
+  t2 = vi_du(-100,-3)
+  t3 = vi_du(200,5)
+  print(t1==t2)
+  print(t2==t3)
+  print(t1==t3)
+  ```
+  Result\:
+  ```Python
+  True
+  False
+  False
+  ```
+## Module
+- To import a module\: `import module`
+- Change moodule name\: `import module as new_module`
+- Import single function from module\: `from module import func`
+### Random
+- `random.random()`\: return a value from 0 to 1
+- `random.randint(start, stop)`\: return an integer from start to stop
+- `random.randrange(star. stop, step)`\: return a value from start to stop following the step size
+- `random.seed()` return a random value. If it is called multiple times with same parameter, it returns the same value
+  ```Python
+  import random
+
+  random.seed(12)
+  print(random.random())
+
+  random.seed(12)
+  print(random.random())
+  ```
+  Result\:
+  ```Python
+  0.4745706786885481
+  0.4745706786885481
+  ```
+  - `random.choice(collection)`\: return a random element in a collection
+  - `random.shuffle(sequence, function)`\: sort a sequence
+    ![alt text](image-26.png)
